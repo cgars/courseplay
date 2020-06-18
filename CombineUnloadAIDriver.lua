@@ -1908,7 +1908,7 @@ function CombineUnloadAIDriver:followChopper()
 		self.followCourse:setOffset(-self.combineOffset, 0)
 
 		if self.combineOffset ~= 0 then
-			self:driveBesideChopper()
+			self:driveBehindChopper()
 		else
 			self:driveBehindChopper()
 		end

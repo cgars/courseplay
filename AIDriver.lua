@@ -349,6 +349,7 @@ function AIDriver:drive(dt)
 
 	if self.state == self.states.STOPPED then
 		self:hold()
+		self:debug('i am stopped do i have to gon on?')
 		self:continueIfWaitTimeIsOver()
 	end
 
@@ -656,6 +657,8 @@ function AIDriver:continueIfWaitTimeIsOver()
 		if (self.vehicle.timer - self.lastMoveCommandTime) > self.vehicle.cp.waitTime * 1000 then
 			self:debug('Waiting time of %d s is over, continuing', self.vehicle.cp.waitTime)
 			self:continue()
+		else
+			self:debug('Waiting time of %d s is not over, waiting', self.vehicle.cp.waitTime)
 		end
 	end
 end

@@ -157,6 +157,7 @@ function CombineUnloadAIDriver:dismiss()
 end
 
 function CombineUnloadAIDriver:drive(dt)
+	self:debugSparse('CombineUnloadAIDriver:drive')
 	courseplay:updateFillLevelsAndCapacities(self.vehicle)
 	self:updateCombineStatus()
 
@@ -171,11 +172,16 @@ function CombineUnloadAIDriver:drive(dt)
 		end
 		if not giveUpControl then
 			AIDriver.drive(self, dt)
+		elseif self.course:isWaitAt(self.ppc:getCurrentWaypointIx()) then
+			AIDriver.drive(self, dt)
 		end
 	elseif self.state == self.states.ON_FIELD then
 		local renderOffset = self.vehicle.cp.coursePlayerNum * 0.03
 		self:renderText(0, 0.1 + renderOffset, "%s: self.onFieldState :%s", nameNum(self.vehicle), self.onFieldState.name)
 		self:driveOnField(dt)
+	elseif self.state == self.states.STOPPED then
+		self:debug('CombineUnloadAIDriver:drive but waiting')
+		AIDriver.drive(self, dt)
 	end
 end
 
